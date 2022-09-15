@@ -1,14 +1,10 @@
-# -*- coding= utf-8 -*-
-# @ Author lyj
-# @ Time 2022/9/11  22:51
-
-from selenium import webdriver
 import re
 import time
 import pandas as pd
 import requests
 from lxml import etree
 from selenium.webdriver.common.by import By
+from selenium import webdriver
 import os
 
 test_url = 'http://www.nhc.gov.cn/xcs/yqtb/list_gzbd_4.shtml'
@@ -26,7 +22,7 @@ province_list = [
     '上海', '重庆', '内蒙古', '广西', '西藏', '宁夏', '新疆'
 ]
 
-
+#获取每一天疫情报告的网址存在web_location中
 def get_child_page():
     for i in range(1, 42):
         #当第一页时，为first_url
@@ -53,14 +49,13 @@ def get_child_page():
 
 
 
-# 通过selenium 一页一页1.获取提炼过的数据 并 2.存入excel（待学、完成）
-def get_detailed_info_Jiang():
-    raw_path = r'D:\软工\软工个人作业\个人作业1\修订版本\raw2'  # （raw,所在路径）
+def get_detailed():
+    raw_path = r'D:\软工\软工个人作业\个人作业1\修订版本\data_of_html'
 
     dir_list = os.listdir(raw_path)
 
-    dir_list.sort(reverse=True)  # 获取有序的文件以便访问
-    for li in dir_list:  # 对于每一个文件， eg：370截至1月11日24时新型冠状病毒肺炎疫情最新情况.html
+    dir_list.sort(reverse=True)  # 获取有序的文件
+    for li in dir_list:
         filePath = r'D:\软工\软工个人作业\个人作业1\修订版本\raw2' + '\\' + li  # 所存txt绝对路径
         with open(filePath, 'r', encoding='utf-8') as f:
             contents = f.readlines()
@@ -177,5 +172,5 @@ def write_in_each_excel(all_dict,sfbt_dict,sfwzz_dict,gat_dict):
 
 if __name__ == '__main__':
     #get_child_page() # 获取web_location.txt
-    get_detailed_info_Jiang()  # 解析数据
+    get_detailed()  # 解析数据
     #get_Raw_data_by_selenium()

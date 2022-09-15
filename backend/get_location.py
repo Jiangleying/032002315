@@ -7,19 +7,19 @@ from time import sleep
 
 from selenium.webdriver.firefox.options import Options
 options = Options()
-options.headless = True  # 设置不弹出浏览器
+options.headless = True
 
-filename = './raw2/' # .html
+filename = './data_of_html/'
 
 i = 976
 with open('web_location.txt', 'r') as file_obj:
-    for line in file_obj: # 访问每个子链接
+    for line in file_obj:
 
         driver = webdriver.Firefox(options=options)  #
         driver.get(line)
         page_text = driver.page_source
         tree = etree.HTML(page_text)
-        while ('疫情通报' not in page_text): # 是否获得正常页面
+        while ('疫情通报' not in page_text): # 若无法正常获得页面
             driver.get(line)
             page_text = driver.page_source
             tree = etree.HTML(page_text)
